@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
-import 'package:thread_clone/utils.dart';
+import 'package:thread_clone/features/settings/view_models/darkmode_config_vm.dart';
 
 const List<String> _tabs = [
   "All",
@@ -85,15 +86,15 @@ const List<Map<String, dynamic>> _activities = [
   },
 ];
 
-class ActivityScreen extends StatefulWidget {
+class ActivityScreen extends ConsumerStatefulWidget {
   static const routeURL = '/activity';
   const ActivityScreen({super.key});
 
   @override
-  State<ActivityScreen> createState() => _ActivityScreenState();
+  ActivityScreenState createState() => ActivityScreenState();
 }
 
-class _ActivityScreenState extends State<ActivityScreen> {
+class ActivityScreenState extends ConsumerState<ActivityScreen> {
   List<Map<String, dynamic>> _filteredActivities = [];
 
   @override
@@ -116,7 +117,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = isDarkMode(context);
+    final bool isDark = ref.watch(darkModeConfigViewModelProvider).isDarkMode;
     return DefaultTabController(
       length: _tabs.length,
       child: Scaffold(

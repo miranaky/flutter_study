@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
+import 'package:thread_clone/features/settings/view_models/darkmode_config_vm.dart';
 import 'package:thread_clone/features/settings/views/settings_screen.dart';
 import 'package:thread_clone/features/user_profile/widgets/persistent_tab_bar.dart';
 import 'package:thread_clone/features/user_profile/widgets/threads.dart';
-import 'package:thread_clone/utils.dart';
 
-class UserProfileScreen extends StatefulWidget {
+class UserProfileScreen extends ConsumerStatefulWidget {
   static const routeURL = '/profile';
   static const routeName = "profile";
   const UserProfileScreen({super.key});
 
   @override
-  State<UserProfileScreen> createState() => _UserProfileScreenState();
+  UserProfileScreenState createState() => UserProfileScreenState();
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
+class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   void _onSettingsTap() {
     context.go(SettingsScreen.routeURL);
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = isDarkMode(context);
+    final isDark = ref.watch(darkModeConfigViewModelProvider).isDarkMode;
     return SafeArea(
       child: DefaultTabController(
         length: 2,

@@ -1,20 +1,21 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/features/photo/take_photo_screen.dart';
-import 'package:thread_clone/utils.dart';
+import 'package:thread_clone/features/settings/view_models/darkmode_config_vm.dart';
 
-class NewThread extends StatefulWidget {
+class NewThread extends ConsumerStatefulWidget {
   const NewThread({super.key});
 
   @override
-  State<NewThread> createState() => _NewThreadState();
+  NewThreadState createState() => NewThreadState();
 }
 
-class _NewThreadState extends State<NewThread> {
+class NewThreadState extends ConsumerState<NewThread> {
   final TextEditingController _threadController = TextEditingController();
   String _thread = '';
 
@@ -50,7 +51,7 @@ class _NewThreadState extends State<NewThread> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isDark = isDarkMode(context);
+    final isDark = ref.watch(darkModeConfigViewModelProvider).isDarkMode;
     return Container(
       clipBehavior: Clip.hardEdge,
       height: size.height * 0.9,

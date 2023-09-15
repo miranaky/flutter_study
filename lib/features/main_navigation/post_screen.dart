@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:thread_clone/features/main_navigation/widgets/post.dart';
-import 'package:thread_clone/utils.dart';
+import 'package:thread_clone/features/settings/view_models/darkmode_config_vm.dart';
 
-class PostScreen extends StatelessWidget {
+class PostScreen extends ConsumerWidget {
   const PostScreen({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final bool isDark = isDarkMode(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bool isDark = ref.watch(darkModeConfigViewModelProvider).isDarkMode;
     return Scaffold(
       appBar: AppBar(
         title: SvgPicture.asset(

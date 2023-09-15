@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:thread_clone/constants/sizes.dart';
-import 'package:thread_clone/utils.dart';
 
 class PersistentTabBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final bool isDark = isDarkMode(context);
     return Container(
       padding: const EdgeInsets.only(
         top: Sizes.size10,

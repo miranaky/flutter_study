@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/features/settings/view_models/darkmode_config_vm.dart';
@@ -36,7 +36,7 @@ const List<Map<String, dynamic>> _settings = [
   }
 ];
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   static const routeURL = '/settings';
   static const routeName = "settings";
   const SettingsScreen({super.key});
@@ -46,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
@@ -97,9 +97,10 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            value: context.watch<DarkModeConfigViewModel>().isDarkMode,
-            onChanged: (value) =>
-                context.read<DarkModeConfigViewModel>().setDarkMode(value),
+            value: ref.watch(darkModeConfigViewModelProvider).isDarkMode,
+            onChanged: (value) => ref
+                .read(darkModeConfigViewModelProvider.notifier)
+                .setDarkMode(value),
           ),
           for (var setting in _settings)
             ListTile(

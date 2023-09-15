@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thread_clone/constants/sizes.dart';
-import 'package:thread_clone/utils.dart';
+import 'package:thread_clone/features/settings/view_models/darkmode_config_vm.dart';
 
-class NavTab extends StatelessWidget {
+class NavTab extends ConsumerWidget {
   const NavTab({
     super.key,
     required this.icon,
@@ -16,8 +17,8 @@ class NavTab extends StatelessWidget {
   final Function onTap;
 
   @override
-  Widget build(BuildContext context) {
-    final bool isDark = isDarkMode(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bool isDark = ref.watch(darkModeConfigViewModelProvider).isDarkMode;
     return Expanded(
       child: GestureDetector(
         onTap: () => onTap(),

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
+import 'package:thread_clone/features/settings/view_models/darkmode_config_vm.dart';
 import 'package:thread_clone/features/settings/views/settings_screen.dart';
-import 'package:thread_clone/utils.dart';
 
-class PrivacyScreen extends StatefulWidget {
+class PrivacyScreen extends ConsumerStatefulWidget {
   static const routeURL = 'privacy';
   static const routeName = "privacy";
   const PrivacyScreen({super.key});
 
   @override
-  State<PrivacyScreen> createState() => _PrivacyScreenState();
+  PrivacyScreenState createState() => PrivacyScreenState();
 }
 
-class _PrivacyScreenState extends State<PrivacyScreen> {
+class PrivacyScreenState extends ConsumerState<PrivacyScreen> {
   bool _privateProfile = true;
 
   final List<Map<String, dynamic>> _privacy_list = [
@@ -79,6 +80,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = ref.watch(darkModeConfigViewModelProvider).isDarkMode;
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
@@ -111,8 +113,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
       body: ListView(
         children: [
           SwitchListTile.adaptive(
-            activeColor:
-                isDarkMode(context) ? Colors.grey.shade700 : Colors.black,
+            activeColor: isDark ? Colors.grey.shade700 : Colors.black,
             value: _privateProfile,
             onChanged: _onPrivateProfileChanged,
             title: const Row(
