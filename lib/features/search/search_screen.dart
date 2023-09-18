@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/features/main_navigation/widgets/search_list.dart';
-import 'package:thread_clone/utils.dart';
+import 'package:thread_clone/features/settings/view_models/darkmode_config_vm.dart';
 
 const List<Map<String, dynamic>> _users = [
   {
@@ -67,13 +68,13 @@ const List<Map<String, dynamic>> _users = [
   },
 ];
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends ConsumerWidget {
   static const routeURL = '/search';
   const SearchScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final bool isDark = isDarkMode(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bool isDark = ref.watch(darkModeConfigViewModelProvider).isDarkMode;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

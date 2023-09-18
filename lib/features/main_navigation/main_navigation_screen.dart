@@ -10,7 +10,7 @@ import 'package:thread_clone/features/user_profile/user_profile_screen.dart';
 
 class MainNavScreen extends StatefulWidget {
   static const routeURL = '/';
-  static const routeName = "main_navication";
+  static const routeName = "main_navigation";
 
   final String tab;
   const MainNavScreen({super.key, required this.tab});
